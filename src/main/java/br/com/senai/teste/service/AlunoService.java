@@ -1,5 +1,8 @@
 package br.com.senai.teste.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import br.com.senai.teste.model.Aluno;
@@ -16,6 +19,14 @@ public class AlunoService {
 
     public Aluno cadastrar(Aluno aluno) {
         return alunoRepository.save(aluno);
+    }
+
+    public List<Aluno> listar() {
+        return alunoRepository.findAll();
+    }
+
+    public Optional<Aluno> buscarPorId(Integer id) {
+        return alunoRepository.findById(id);
     }
 }
 
