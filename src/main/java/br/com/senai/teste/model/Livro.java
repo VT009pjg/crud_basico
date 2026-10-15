@@ -7,20 +7,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
-@Entity 
+@Entity
 @Table(name = "livro")
 public class Livro {
-    @Id 
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;                        
+    private Integer id;
 
-    @NotBlank (message = "O título é obrigatório")
+    @NotBlank(message = "O título é obrigatório")
     private String titulo;
 
-    @NotBlank (message = "O autor é obrigatótio")
+    @NotBlank(message = "O autor é obrigatótio")
     private String autor;
 
-    @NotBlank (message = "O ano deve ser maior que zero")
+    @NotBlank(message = "O ano deve ser maior que zero")
     private Integer anoPublicacao;
 
     public Livro() {
@@ -32,11 +32,11 @@ public class Livro {
         this.anoPublicacao = anoPublicacao;
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id){
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -44,23 +44,23 @@ public class Livro {
         return titulo;
     }
 
-    public void setTitulo(String titulo){
+    public void setTitulo(String titulo) {
         this.titulo = titulo;
-    } 
+    }
 
-    public String getAutor(){
+    public String getAutor() {
         return autor;
     }
 
-    public void setAutor(String autor){
+    public void setAutor(String autor) {
         this.autor = autor;
     }
 
-    public Integer getAnoPublicacao(){
+    public Integer getAnoPublicacao() {
         return anoPublicacao;
     }
 
-    public void setAnoPublicacao(Integer anoPublicacao){
+    public void setAnoPublicacao(Integer anoPublicacao) {
         this.anoPublicacao = anoPublicacao;
     }
 }

@@ -8,20 +8,18 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice 
+@RestControllerAdvice
 public class ValidacaoExceptionHandler {
-    
-    @ExceptionHandler (MethodArgumentNotValidException.class)
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> travarValidacao(
-        MethodArgumentNotValidException erro) {
+            MethodArgumentNotValidException erro) {
 
-    Map<String, String> mensagens = new LinkedHashMap<>();
+        Map<String, String> mensagens = new LinkedHashMap<>();
 
-    erro.getBindingResult().getFieldErrors().forEach(campo ->
-        mensagens.put(campo.getField(),
-                        campo.getDefaultMessage())
-    );
+        erro.getBindingResult().getFieldErrors().forEach(campo -> mensagens.put(campo.getField(),
+                campo.getDefaultMessage()));
 
-    return ResponseEntity.badRequest().body(mensagens);
-        }
+        return ResponseEntity.badRequest().body(mensagens);
+    }
 }

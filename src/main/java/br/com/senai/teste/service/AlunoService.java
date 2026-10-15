@@ -50,9 +50,9 @@ public class AlunoService {
         return Optional.of(alunoRepository.save(aluno));
     }
 
-    public boolean excluir(Integer id){
-        
-        if(!alunoRepository.existsById(id)) {
+    public boolean excluir(Integer id) {
+
+        if (!alunoRepository.existsById(id)) {
             return false;
         }
 

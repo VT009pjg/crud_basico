@@ -9,20 +9,21 @@ import br.com.senai.teste.model.Emprestimo;
 import br.com.senai.teste.model.Livro;
 import br.com.senai.teste.repository.AlunoRepository;
 import br.com.senai.teste.repository.LivroRepository;
+import java.util.List;
 
-@Service 
+@Service
 public class EmprestimoService {
-    
-    private final EmprestimoRepository EmprestimoRepository;
+
+    private final EmprestimoRepository emprestimoRepository;
     private final AlunoRepository alunoRepository;
     private final LivroRepository livroRepository;
 
     public EmprestimoService(
             EmprestimoRepository emprestimoRepository,
             AlunoRepository alunoRepository,
-            LivroRepository livroRepository){
+            LivroRepository livroRepository) {
 
-        this.EmprestimoRepository = emprestimoRepository;
+        this.emprestimoRepository = emprestimoRepository;
         this.alunoRepository = alunoRepository;
         this.livroRepository = livroRepository;
     }
@@ -34,7 +35,7 @@ public class EmprestimoService {
         Optional<Livro> livro = livroRepository.findById(livroId);
 
         if (aluno.isEmpty() || livro.isEmpty()) {
-            return Optional.empty();        
+            return Optional.empty();
         }
 
         Emprestimo emprestimo = new Emprestimo();
@@ -42,6 +43,31 @@ public class EmprestimoService {
         emprestimo.setLivro(livro.get());
         emprestimo.setDataEmprestimo(LocalDate.now());
 
-        return Optional.of(EmprestimoRepository.save(emprestimo));
+        return Optional.of(emprestimoRepository.save(emprestimo));
+    }
+
+    public List<Emprestimo> listar() {
+        return emprestimoRepository.findAll();
+    }
+
+    public Optional<Emprestimo> buscarPorId(Integer id) {
+        return emprestimoRepository.findById(id);
+    }
+
+    public Optional<Emprestimo>devolver(Integer id) {
+        Optional<Emprestimo> encontrado = emprestimoRepository.findById(id);
+
+        if (encontrado.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Emprestimo emprestimo = encontrado.get();
+
+        if (emprestimo.getDataDevolucao() == null){
+            emprestimo.setDataDevolucao(LocalDate.now());
+            emprestimoRepository.save(emprestimo);
+        }
+
+        return Optional.of(emprestimo);
     }
 }

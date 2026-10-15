@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import br.com.senai.teste.model.Livro;
 import br.com.senai.teste.repository.LivroRepository;
 
-@Service 
+@Service
 public class LivroService {
-    
-    @Autowired 
+
+    @Autowired
     private LivroRepository livroRepository;
 
     public Livro cadastrar(Livro livro) {
@@ -19,10 +19,10 @@ public class LivroService {
     }
 
     public List<Livro> listar() {
-        return  livroRepository.findAll();
+        return livroRepository.findAll();
     }
 
-    public Livro buscarPorId(Integer id){
+    public Livro buscarPorId(Integer id) {
         Optional<Livro> livro = livroRepository.findById(id);
         return livro.orElse(null);
     }
@@ -38,7 +38,7 @@ public class LivroService {
         return null;
     }
 
-    public  void excluir(Integer id) {
+    public void excluir(Integer id) {
         livroRepository.deleteById(id);
     }
 }
