@@ -3,7 +3,11 @@ package br.com.senai.teste.service;
 import br.com.senai.teste.repository.EmprestimoRepository;
 import java.time.LocalDate;
 import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
 import br.com.senai.teste.model.Aluno;
 import br.com.senai.teste.model.Emprestimo;
 import br.com.senai.teste.model.Livro;
@@ -38,6 +42,13 @@ public class EmprestimoService {
             return Optional.empty();
         }
 
+        boolean livroEmprestado = emprestimoRepository
+                .existsByLivroIdAndDataDevolucaoIsNull(livroId);
+
+        if (livroEmprestado) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Livro já está emprestado");
+        }
+
         Emprestimo emprestimo = new Emprestimo();
         emprestimo.setAluno(aluno.get());
         emprestimo.setLivro(livro.get());
@@ -69,5 +80,9 @@ public class EmprestimoService {
         }
 
         return Optional.of(emprestimo);
+    }
+
+    public List<Emprestimo> listarAtivos() {
+        return emprestimoRepository.findByDataDevolucaoIsNull();
     }
 }
